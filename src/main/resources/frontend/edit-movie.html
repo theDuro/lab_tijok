@@ -9,7 +9,29 @@
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script type="text/javascript">
-        function addMovie() {
+        let searchParams = new URLSearchParams(window.location.search)
+        let param = searchParams.get('movieId')
+        console.log('param = ', param);
+
+        if(!param) {
+            // ;-)
+            alert("CO ROBISZ ŁOBUZIE!!!");
+            goToMainPage();
+        }
+
+        $.get('http://127.0.0.1:8080/api/movies/' + param, {}, function (data, textStatus, jqXHR) {
+
+            console.log('data: ', data);
+            $('#movieId').val(param);
+            $('#title').val(data.title);
+            $('#image').val(data.image);
+            $('#year').val(data.year);
+            $('#videoId').val(data.videoId);
+        }).fail(function() {
+            alert('Ups... Coś poszło nie tak :-(');
+        });
+
+        function updateMovie() {
             var movie = {
                 title: $("#title").val(),
                 image: $("#image").val(),
@@ -18,15 +40,15 @@
             };
 
             $.ajax({
-                url: 'http://127.0.0.1:8080/api/movies',
-                type: 'post',
+                url: 'http://127.0.0.1:8080/api/movies/' + param,
+                type: 'put',
                 contentType: 'application/json',
                 success: function (data) {
                     console.log('data: ', data);
-                    back();
+                    goToMainPage();
                 },
                 error: function() {
-                    $('#target').html("<b style='color: red;'>Coś poszło nie tak... Usługa nie działa dobrze :/</b>");
+                    alert('Coś poszło nie tak... Usługa nie działa dobrze :(')
                 },
                 data: JSON.stringify(movie)
             });
@@ -37,13 +59,17 @@
                 back();
             });
 
-            $("#add-movie").submit(function(e) {
+            $("#update-movie").submit(function(e) {
                 e.preventDefault();
-                addMovie();
+                updateMovie();
             });
         });
 
         function back() {
+            window.location.href='details-movie.html?movieId=' + param;
+        }
+
+        function goToMainPage() {
             window.location.href='movies.html';
         }
 
@@ -53,15 +79,16 @@
 <body>
     <header>
         <div class="header-title">
-            <h1>Dodaj film</h1>
+            <h1>Edytuj film</h1>
         </div><div class="header-counter-button">&nbsp;</div><div class="header-button" id="back">POWRÓT</div>
     </header>
 
     <div class="messages" id="target"></div>
 
     <div class="form-data">
-        <form name="add-movie" id="add-movie">
+        <form name="update-movie" id="update-movie">
 
+            <label for="movieId">ID:<br/></label><input id="movieId" name="movieId" type="text" disabled/><br/>
             <label for="title">Tytuł filmu:<br/></label><input id="title" name="title" type="text" required/><br/>
             <label for="image">Link do obrazka (jpg/png):<br/></label><input id="image" name="image" type="text" required/><br/>
             <label for="year">Rok produkcji:<br/></label><input id="year" name="year" type="number" min="0" required/><br/>

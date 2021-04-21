@@ -13,15 +13,11 @@ import java.util.List;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long>, CrudRepository<Movie, Long> {
 
+    List<Movie> findByOrderByYearDesc();
+
     @Modifying
     @Query("DELETE FROM Movie m WHERE m.movieId = :movieId")
     void deleteById(@Param("movieId") Long movieId);
-
-    @Query("SELECT m from Movie m order by m.year desc")
-    List<Movie> sortedMovies();
-
-    @Query("SELECT m from Movie m WHERE m.movieId= :movieId")
-    Movie getMovieTrailer(@Param("movieId") Long movieId);
 
     Movie findOneByMovieId(Long movieId);
 }

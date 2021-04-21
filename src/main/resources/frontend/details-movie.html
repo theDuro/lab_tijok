@@ -33,10 +33,18 @@
             $('#back').click(function(){
                 back();
             });
+
+            $('#edit').click(function(){
+                edit();
+            });
         });
 
         function back() {
             window.location.href='movies.html';
+        }
+
+        function edit() {
+            window.location.href='edit-movie.html?movieId=' + param;
         }
 
     </script>
@@ -46,7 +54,7 @@
     <header>
         <div class="header-title">
             <h1 id="title">Szczegóły</h1>
-        </div><div class="header-button" id="back">POWRÓT</div>
+        </div><div class="header-counter-button" id="edit">EDYTUJ</div><div class="header-button" id="back">POWRÓT</div>
     </header>
 
     <iframe width="600" height="345" frameborder="0"></iframe>

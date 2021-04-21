@@ -2,12 +2,12 @@ package pl.edu.pwsztar.domain.dto;
 
 import java.io.Serializable;
 
-public class CreateMovieDto implements Serializable {
+public class UpdateMovieDto implements Serializable {
     private String title;
     private String image;
     private Integer year;
     private String videoId;
-    private CreateMovieDto(Builder builder){
+    private UpdateMovieDto(UpdateMovieDto.Builder builder){
         title = builder.title;
         image = builder.image;
         year = builder.year;
@@ -19,21 +19,21 @@ public class CreateMovieDto implements Serializable {
         private String image;
         private Integer year;
         private String videoId;
-        public Builder title(String title) {
+        public UpdateMovieDto.Builder title(String title) {
             this.title = title;
             return this;
         }
 
-        public Builder videoId(String videoId) {
+        public UpdateMovieDto.Builder movieId(String videoId) {
             this.videoId = videoId;
             return this;
         }
-        public Builder year(Integer year) {
+        public UpdateMovieDto.Builder year(Integer year) {
             this.year = year;
             return this;
         }
 
-        public Builder image(String image) {
+        public UpdateMovieDto.Builder image(String image) {
             this.image = image;
             return this;
         }
@@ -42,15 +42,13 @@ public class CreateMovieDto implements Serializable {
         public Builder() {
         }
 
-        public CreateMovieDto build() {
-            return new CreateMovieDto(this);
+        public UpdateMovieDto build() {
+            return new UpdateMovieDto(this);
         }
     }
 
 
-
-
-    public CreateMovieDto() {
+    public UpdateMovieDto() {
     }
 
     public String getTitle() {
@@ -78,7 +76,4 @@ public class CreateMovieDto implements Serializable {
                 ", videoId='" + videoId + '\'' +
                 '}';
     }
-
-
-
 }

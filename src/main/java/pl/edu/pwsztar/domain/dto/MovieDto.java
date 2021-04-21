@@ -8,6 +8,45 @@ public class MovieDto implements Serializable {
     private String title;
     private String image;
     private Integer year;
+    private MovieDto(MovieDto.Builder builder){
+        title = builder.title;
+        image = builder.image;
+        year = builder.year;
+        movieId = builder.movieId;
+
+    }
+    public static final class Builder {
+        private String title;
+        private String image;
+        private Integer year;
+        private Long movieId;
+        public MovieDto.Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public MovieDto.Builder movieId(Long movieId) {
+            this.movieId = movieId;
+            return this;
+        }
+        public MovieDto.Builder year(Integer year) {
+            this.year = year;
+            return this;
+        }
+
+        public MovieDto.Builder image(String image) {
+            this.image = image;
+            return this;
+        }
+
+
+        public Builder() {
+        }
+
+        public MovieDto build() {
+            return new MovieDto(this);
+        }
+    }
 
     public MovieDto() {
     }

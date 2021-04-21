@@ -29,6 +29,15 @@
 		    $('#movies').html("<div style='text-align: center; color: red;'>Mam problem z wyświetleniem danych... :/ (musisz uruchomić aplikacje za pomocą MAVEN)</div>");
 		});
 
+		// count movies
+		$.get('http://127.0.0.1:8080/api/movies/counter', {}, function (data, textStatus, jqXHR) {
+			console.log('movies counter data: ', data);
+			$('#movies-counter').html(data.counter);
+		}).fail(function() {
+			console.log('movies counter error');
+			$('#movies-counter').html(0);
+		});
+
 		function deleteMovie(movieId) {
 			console.log('check delete....');
 			$.ajax({
@@ -69,9 +78,7 @@
 
 	<body>
 		<header>
-			<div class="header-title">
-				<h1>Biblioteka filmów</h1>
-			</div><div class="header-button" id="add-movie">DODAJ FILM</div>
+			<div class="header-title"><h1>Biblioteka filmów</h1></div><div class="header-counter-button">LICZNIK: <span id="movies-counter"></span></div><div class="header-button" id="add-movie">DODAJ FILM</div>
 		</header>
 
     	<div class="movies" id="movies"></div>

@@ -8,9 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import pl.edu.pwsztar.domain.dto.CreateMovieDto;
-import pl.edu.pwsztar.domain.dto.MovieDto;
-import pl.edu.pwsztar.domain.dto.TrailerDto;
+import pl.edu.pwsztar.domain.dto.*;
 import pl.edu.pwsztar.service.MovieService;
 
 import java.util.List;
@@ -41,7 +39,7 @@ public class MovieApiController {
     @PostMapping(value = "/movies", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> createMovie(@RequestBody CreateMovieDto createMovieDto) {
         LOGGER.info("create movie: {}", createMovieDto);
-        movieService.createMovie(createMovieDto);
+        movieService.creatMovie(createMovieDto);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -54,12 +52,33 @@ public class MovieApiController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @CrossOrigin
     @GetMapping(value = "/movies/{movieId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TrailerDto> getMovieTrailer(@PathVariable Long movieId) {
-        LOGGER.info("delete movie: {}", movieId);
-        TrailerDto trailerDto = movieService.getMovieTrailer(movieId);
-        return new ResponseEntity<>(trailerDto,HttpStatus.OK);
+    public ResponseEntity<DetailsMovieDto> detailsMovie(@PathVariable Long movieId) {
+        LOGGER.info("details movie: {}", movieId);
+        DetailsMovieDto detailsMovieDto = movieService.findMovie(movieId);
+
+        return new ResponseEntity<>(detailsMovieDto, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping(value = "/movies/{movieId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Void> updateMovie(@RequestBody UpdateMovieDto updateMovieDto,
+                                            @PathVariable Long movieId) {
+        LOGGER.info("update movie: {}", movieId);
+        movieService.updateMovie(movieId, updateMovieDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "/movies/counter", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<MovieCounterDto> countMovies() {
+        LOGGER.info("count movies");
+
+        MovieCounterDto movieCounterDto = movieService.countMovies();
+        return new ResponseEntity<>(movieCounterDto, HttpStatus.OK);
     }
 
 }

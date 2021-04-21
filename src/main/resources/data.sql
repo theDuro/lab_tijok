@@ -5,7 +5,7 @@ CREATE TABLE movies (
 	title VARCHAR(100),
 	image VARCHAR(300),
 	year INT,
-	video_id VARCHAR (100)
+	video_id VARCHAR(100)
 );
 
 INSERT INTO movies VALUES (1, 'System', './img/movies/system.jpg', 1995, '46qKHq7REI4');

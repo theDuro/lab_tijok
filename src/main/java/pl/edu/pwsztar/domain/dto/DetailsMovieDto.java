@@ -1,13 +1,11 @@
 package pl.edu.pwsztar.domain.dto;
 
-import java.io.Serializable;
-
-public class CreateMovieDto implements Serializable {
+public class DetailsMovieDto {
     private String title;
+    private String videoId;
     private String image;
     private Integer year;
-    private String videoId;
-    private CreateMovieDto(Builder builder){
+    private DetailsMovieDto(DetailsMovieDto.Builder builder){
         title = builder.title;
         image = builder.image;
         year = builder.year;
@@ -19,21 +17,21 @@ public class CreateMovieDto implements Serializable {
         private String image;
         private Integer year;
         private String videoId;
-        public Builder title(String title) {
+        public DetailsMovieDto.Builder title(String title) {
             this.title = title;
             return this;
         }
 
-        public Builder videoId(String videoId) {
+        public DetailsMovieDto.Builder videoId(String videoId) {
             this.videoId = videoId;
             return this;
         }
-        public Builder year(Integer year) {
+        public DetailsMovieDto.Builder year(Integer year) {
             this.year = year;
             return this;
         }
 
-        public Builder image(String image) {
+        public DetailsMovieDto.Builder image(String image) {
             this.image = image;
             return this;
         }
@@ -42,43 +40,51 @@ public class CreateMovieDto implements Serializable {
         public Builder() {
         }
 
-        public CreateMovieDto build() {
-            return new CreateMovieDto(this);
+        public DetailsMovieDto build() {
+            return new DetailsMovieDto(this);
         }
     }
 
+    public DetailsMovieDto() {
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-
-    public CreateMovieDto() {
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
     }
 
     public String getTitle() {
         return title;
     }
 
+    public String getVideoId() {
+        return videoId;
+    }
+
     public String getImage() {
         return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Integer getYear() {
         return year;
     }
 
-    public String getVideoId() {
-        return videoId;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     @Override
     public String toString() {
-        return "CreateMovieDto{" +
+        return "DetailsMovieDto{" +
                 "title='" + title + '\'' +
-                ", image='" + image + '\'' +
-                ", year=" + year +
                 ", videoId='" + videoId + '\'' +
                 '}';
     }
-
-
-
 }
